@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>股市晨報 — {{REPORT_DATE}}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+  :root {
+    --bg:        #F7F6F2;
+    --surface:   #FFFFFF;
+    --border:    rgba(0,0,0,0.10);
+    --border-md: rgba(0,0,0,0.18);
+    --text:      #1A1A18;
+    --muted:     #6B6B66;
+    --hint:      #9E9E99;
+    --up:        #A32D2D;
+    --down:      #27500A;
+    --accent-bg: #F0F4FF;
+    --accent:    #185FA5;
+    --tag-up-bg:   #FAECE7;
+    --tag-up-text: #993C1D;
+    --tag-up-bd:   #F0997B;
+    --tag-nt-bg:   #F1EFE8;
+    --tag-nt-text: #5F5E5A;
+    --tag-nt-bd:   #B4B2A9;
+    --tag-wt-bg:   #E6F1FB;
+    --tag-wt-text: #185FA5;
+    --tag-wt-bd:   #85B7EB;
+    --kd-bg:   #EAF3DE; --kd-text: #3B6D11; --kd-bd: #97C459;
+    --macd-bg: #E6F1FB; --macd-text: #185FA5; --macd-bd: #85B7EB;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+  }
+ 
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+ 
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 4rem;
+  }
+ 
+  /* ── Masthead ── */
+  .masthead {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 2px solid var(--text);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.75rem;
+  }
+  .masthead-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    line-height: 1;
+  }
+  .masthead-meta {
+    text-align: right;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .masthead-meta strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+ 
+  /* ── Section label ── */
+  .section-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--hint);
+    margin-bottom: 0.65rem;
+  }
+ 
+  /* ── Index grid ── */
+  .index-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 1.75rem;
+  }
+  .idx-card {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 0.85rem 1rem;
+  }
+  .idx-card.highlight {
+    border: 1.5px solid var(--border-md);
+  }
+  .idx-name {
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .idx-val {
+    font-family: 'DM Mono', monospace;
+    font-size: 19px;
+    font-weight: 500;
+    margin-bottom: 3px;
+    letter-spacing: -0.01em;
+  }
+  .idx-chg {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .up   { color: var(--up); }
+  .down { color: var(--down); }
+  .flat { color: var(--muted); }
+ 
+  /* ── Divider ── */
+  .divider {
+    height: 0.5px;
+    background: var(--border);
+    margin: 1.5rem 0;
+  }
+ 
+  /* ── Analysis blocks ── */
+  .analysis-block { margin-bottom: 1.75rem; }
+ 
+  .block-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+  }
+  .block-num {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--text);
+    color: var(--surface);
+    font-size: 11px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+ 
+  .analysis-body {
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--text);
+  }
+  .analysis-body p { margin-bottom: 0.7rem; }
+  .analysis-body p:last-child { margin-bottom: 0; }
+ 
+  /* ── Tags ── */
+  .tag-row {
+    display: flex;
+    gap: 7px;
+    flex-wrap: wrap;
+    margin: 0.65rem 0;
+  }
+  .tag {
+    font-size: 11px;
+    padding: 3px 11px;
+    border-radius: 20px;
+    font-weight: 500;
+    border: 0.5px solid;
+  }
+  .tag-up      { background: var(--tag-up-bg);   color: var(--tag-up-text);   border-color: var(--tag-up-bd); }
+  .tag-neutral { background: var(--tag-nt-bg);   color: var(--tag-nt-text);   border-color: var(--tag-nt-bd); }
+  .tag-watch   { background: var(--tag-wt-bg);   color: var(--tag-wt-text);   border-color: var(--tag-wt-bd); }
+ 
+  /* ── Stock table ── */
+  .filter-note {
+    font-size: 12px;
+    color: var(--hint);
+    margin-bottom: 0.85rem;
+    padding: 0.5rem 0.75rem;
+    background: var(--bg);
+    border-radius: var(--radius-sm);
+    border: 0.5px solid var(--border);
+  }
+ 
+  .stock-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .stock-table th {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--hint);
+    border-bottom: 0.5px solid var(--border-md);
+    padding: 6px 10px;
+    text-align: left;
+  }
+  .stock-table td {
+    padding: 10px 10px;
+    border-bottom: 0.5px solid var(--border);
+    vertical-align: top;
+  }
+  .stock-table tr:last-child td { border-bottom: none; }
+  .stock-name  { font-weight: 500; font-size: 14px; }
+  .stock-code  { color: var(--hint); font-size: 11px; font-family: 'DM Mono', monospace; margin-top: 2px; }
+  .stock-price { font-family: 'DM Mono', monospace; font-size: 15px; font-weight: 500; }
+  .stock-reason{ color: var(--muted); font-size: 12px; line-height: 1.6; }
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: 500;
+    margin: 2px 3px 2px 0;
+    border: 0.5px solid;
+  }
+  .badge-kd   { background: var(--kd-bg);   color: var(--kd-text);   border-color: var(--kd-bd); }
+  .badge-macd { background: var(--macd-bg); color: var(--macd-text); border-color: var(--macd-bd); }
+ 
+  /* ── No-stock fallback ── */
+  .no-stock {
+    font-size: 13px;
+    color: var(--muted);
+    padding: 1rem;
+    text-align: center;
+    background: var(--bg);
+    border-radius: var(--radius-sm);
+    border: 0.5px dashed var(--border-md);
+  }
+ 
+  /* ── Footer ── */
+  .footer {
+    margin-top: 2.5rem;
+    padding-top: 0.85rem;
+    border-top: 0.5px solid var(--border);
+    font-size: 11px;
+    color: var(--hint);
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+ 
+  /* ── Responsive ── */
+  @media (max-width: 620px) {
+    .index-grid { grid-template-columns: repeat(2, 1fr); }
+    .masthead   { flex-direction: column; align-items: flex-start; gap: 6px; }
+    .masthead-meta { text-align: left; }
+    .stock-table th:last-child,
+    .stock-table td:last-child { display: none; }
+  }
+  @media (max-width: 400px) {
+    .index-grid { grid-template-columns: 1fr 1fr; }
+    .idx-val    { font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+ 
+  <!-- ── Masthead ── -->
+  <div class="masthead">
+    <div class="masthead-title">股市晨報</div>
+    <div class="masthead-meta">
+      <strong>{{REPORT_DATE}}</strong><br>
+      {{REPORT_WEEKDAY}}　08:30 自動產出
+    </div>
+  </div>
+ 
+  <!-- ── 指數區塊 ── -->
+  <div class="section-label">昨日指數收盤</div>
+  <div class="index-grid">
+ 
+    <div class="idx-card">
+      <div class="idx-name">道瓊工業指數</div>
+      <div class="idx-val">{{DOW_VALUE}}</div>
+      <div class="idx-chg {{DOW_COLOR}}">{{DOW_CHANGE}}</div>
+    </div>
+ 
+    <div class="idx-card">
+      <div class="idx-name">S&amp;P 500</div>
+      <div class="idx-val">{{SP500_VALUE}}</div>
+      <div class="idx-chg {{SP500_COLOR}}">{{SP500_CHANGE}}</div>
+    </div>
+ 
+    <div class="idx-card">
+      <div class="idx-name">Nasdaq</div>
+      <div class="idx-val">{{NASDAQ_VALUE}}</div>
+      <div class="idx-chg {{NASDAQ_COLOR}}">{{NASDAQ_CHANGE}}</div>
+    </div>
+ 
+    <div class="idx-card">
+      <div class="idx-name">費城半導體 SOX</div>
+      <div class="idx-val">{{SOX_VALUE}}</div>
+      <div class="idx-chg {{SOX_COLOR}}">{{SOX_CHANGE}}</div>
+    </div>
+ 
+    <div class="idx-card highlight">
+      <div class="idx-name">台股加權指數</div>
+      <div class="idx-val">{{TWSE_VALUE}}</div>
+      <div class="idx-chg {{TWSE_COLOR}}">{{TWSE_CHANGE}}</div>
+    </div>
+ 
+    <div class="idx-card highlight">
+      <div class="idx-name">夜台指（期貨夜盤）</div>
+      <div class="idx-val">{{FUTURES_VALUE}}</div>
+      <div class="idx-chg {{FUTURES_COLOR}}">{{FUTURES_CHANGE}}</div>
+    </div>
+ 
+  </div>
+ 
+  <div class="divider"></div>
+ 
+  <!-- ── 區塊一：大盤表現分析 ── -->
+  <div class="analysis-block">
+    <div class="block-title">
+      <span class="block-num">1</span>大盤表現分析
+    </div>
+    <div class="analysis-body">
+      {{BLOCK1_CONTENT}}
+    </div>
+  </div>
+ 
+  <div class="divider"></div>
+ 
+  <!-- ── 區塊二：今日台股影響預判 ── -->
+  <div class="analysis-block">
+    <div class="block-title">
+      <span class="block-num">2</span>今日台股影響預判
+    </div>
+    <div class="analysis-body">
+      {{BLOCK2_CONTENT}}
+    </div>
+  </div>
+ 
+  <div class="divider"></div>
+ 
+  <!-- ── 區塊三：個股觀察建議 ── -->
+  <div class="analysis-block">
+    <div class="block-title">
+      <span class="block-num">3</span>個股觀察建議
+    </div>
+    <div class="filter-note">
+      篩選條件：股價 100–500 元｜KD &lt; 50｜MACD 動能向上｜量能增加（Phase 2 啟用後自動篩選）
+    </div>
+    {{BLOCK3_CONTENT}}
+  </div>
+ 
+  <!-- ── Footer ── -->
+  <div class="footer">
+    <span>⚠ 本報告由 AI 自動生成，僅供參考，不構成任何投資建議</span>
+    <span>股市晨報 v1.0</span>
+  </div>
+ 
+</div>
+</body>
+</html>
+ 
