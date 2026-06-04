@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>股市晨報 — {{REPORT_DATE}}</title>
+<title>股市晨報 — 2026 / 06 / 04</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -281,7 +281,7 @@
     <div class="masthead-title">股市晨報</div>
     <div class="masthead-meta">
       <strong>{{REPORT_DATE}}</strong><br>
-      {{REPORT_WEEKDAY}}　08:30 自動產出
+      週四　08:30 自動產出
     </div>
   </div>
  
@@ -291,38 +291,38 @@
  
     <div class="idx-card">
       <div class="idx-name">道瓊工業指數</div>
-      <div class="idx-val">{{DOW_VALUE}}</div>
-      <div class="idx-chg {{DOW_COLOR}}">{{DOW_CHANGE}}</div>
+      <div class="idx-val">50,687.07</div>
+      <div class="idx-chg down">▼ 621 (-1.21%)</div>
     </div>
  
     <div class="idx-card">
       <div class="idx-name">S&amp;P 500</div>
-      <div class="idx-val">{{SP500_VALUE}}</div>
-      <div class="idx-chg {{SP500_COLOR}}">{{SP500_CHANGE}}</div>
+      <div class="idx-val">N/A</div>
+      <div class="idx-chg flat">資料異常</div>
     </div>
  
     <div class="idx-card">
       <div class="idx-name">Nasdaq</div>
-      <div class="idx-val">{{NASDAQ_VALUE}}</div>
-      <div class="idx-chg {{NASDAQ_COLOR}}">{{NASDAQ_CHANGE}}</div>
+      <div class="idx-val">N/A</div>
+      <div class="idx-chg flat">資料異常</div>
     </div>
  
     <div class="idx-card">
       <div class="idx-name">費城半導體 SOX</div>
-      <div class="idx-val">{{SOX_VALUE}}</div>
-      <div class="idx-chg {{SOX_COLOR}}">{{SOX_CHANGE}}</div>
+      <div class="idx-val">N/A</div>
+      <div class="idx-chg flat">資料異常</div>
     </div>
  
     <div class="idx-card highlight">
       <div class="idx-name">台股加權指數</div>
-      <div class="idx-val">{{TWSE_VALUE}}</div>
-      <div class="idx-chg {{TWSE_COLOR}}">{{TWSE_CHANGE}}</div>
+      <div class="idx-val">N/A</div>
+      <div class="idx-chg flat">資料異常</div>
     </div>
  
     <div class="idx-card highlight">
       <div class="idx-name">夜台指（期貨夜盤）</div>
-      <div class="idx-val">{{FUTURES_VALUE}}</div>
-      <div class="idx-chg {{FUTURES_COLOR}}">{{FUTURES_CHANGE}}</div>
+      <div class="idx-val">N/A</div>
+      <div class="idx-chg flat">資料異常</div>
     </div>
  
   </div>
@@ -335,7 +335,7 @@
       <span class="block-num">1</span>大盤表現分析
     </div>
     <div class="analysis-body">
-      {{BLOCK1_CONTENT}}
+      台股是指在臺灣證券交易所（TWSE）上市交易的股票，包括臺灣本地上市公司的股份，以及部分外國公司在臺灣發行的存託憑證等。
     </div>
   </div>
  
@@ -347,7 +347,7 @@
       <span class="block-num">2</span>今日台股影響預判
     </div>
     <div class="analysis-body">
-      {{BLOCK2_CONTENT}}
+      台股是指在台灣證券交易所（TWSE）掛牌交易的股票，包括各種產業的上市及上櫃公司，投資者可以通過買賣股票參與台股市場。
     </div>
   </div>
  
@@ -361,7 +361,7 @@
     <div class="filter-note">
       篩選條件：股價 100–500 元｜KD &lt; 50｜MACD 動能向上｜量能增加（Phase 2 啟用後自動篩選）
     </div>
-    {{BLOCK3_CONTENT}}
+    <div class="no-stock">個股自動篩選功能將於 Phase 2（串接 Fugle API）後啟用。<br>目前請參考上方類股輪動判斷手動觀察。</div>
   </div>
  
   <!-- ── Footer ── -->
