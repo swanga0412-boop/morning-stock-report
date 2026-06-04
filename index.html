@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>股市晨報 — 2026 / 06 / 04</title>
+<title>股市晨報 — {{REPORT_DATE}}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
- 
+
   :root {
     --bg:        #F7F6F2;
     --surface:   #FFFFFF;
@@ -36,7 +36,7 @@
     --radius-md: 10px;
     --radius-lg: 14px;
   }
- 
+
   body {
     font-family: 'Inter', sans-serif;
     background: var(--bg);
@@ -44,13 +44,13 @@
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
   }
- 
+
   .page {
     max-width: 900px;
     margin: 0 auto;
     padding: 2rem 1.25rem 4rem;
   }
- 
+
   /* ── Masthead ── */
   .masthead {
     display: flex;
@@ -77,7 +77,7 @@
     color: var(--text);
     font-weight: 500;
   }
- 
+
   /* ── Section label ── */
   .section-label {
     font-size: 10px;
@@ -87,7 +87,7 @@
     color: var(--hint);
     margin-bottom: 0.65rem;
   }
- 
+
   /* ── Index grid ── */
   .index-grid {
     display: grid;
@@ -127,17 +127,17 @@
   .up   { color: var(--up); }
   .down { color: var(--down); }
   .flat { color: var(--muted); }
- 
+
   /* ── Divider ── */
   .divider {
     height: 0.5px;
     background: var(--border);
     margin: 1.5rem 0;
   }
- 
+
   /* ── Analysis blocks ── */
   .analysis-block { margin-bottom: 1.75rem; }
- 
+
   .block-title {
     font-family: 'Noto Serif TC', serif;
     font-size: 17px;
@@ -161,7 +161,7 @@
     justify-content: center;
     flex-shrink: 0;
   }
- 
+
   .analysis-body {
     font-size: 14px;
     line-height: 1.9;
@@ -169,7 +169,7 @@
   }
   .analysis-body p { margin-bottom: 0.7rem; }
   .analysis-body p:last-child { margin-bottom: 0; }
- 
+
   /* ── Tags ── */
   .tag-row {
     display: flex;
@@ -187,7 +187,7 @@
   .tag-up      { background: var(--tag-up-bg);   color: var(--tag-up-text);   border-color: var(--tag-up-bd); }
   .tag-neutral { background: var(--tag-nt-bg);   color: var(--tag-nt-text);   border-color: var(--tag-nt-bd); }
   .tag-watch   { background: var(--tag-wt-bg);   color: var(--tag-wt-text);   border-color: var(--tag-wt-bd); }
- 
+
   /* ── Stock table ── */
   .filter-note {
     font-size: 12px;
@@ -198,7 +198,7 @@
     border-radius: var(--radius-sm);
     border: 0.5px solid var(--border);
   }
- 
+
   .stock-table {
     width: 100%;
     border-collapse: collapse;
@@ -234,7 +234,7 @@
   }
   .badge-kd   { background: var(--kd-bg);   color: var(--kd-text);   border-color: var(--kd-bd); }
   .badge-macd { background: var(--macd-bg); color: var(--macd-text); border-color: var(--macd-bd); }
- 
+
   /* ── No-stock fallback ── */
   .no-stock {
     font-size: 13px;
@@ -245,7 +245,7 @@
     border-radius: var(--radius-sm);
     border: 0.5px dashed var(--border-md);
   }
- 
+
   /* ── Footer ── */
   .footer {
     margin-top: 2.5rem;
@@ -258,7 +258,7 @@
     gap: 1rem;
     flex-wrap: wrap;
   }
- 
+
   /* ── Responsive ── */
   @media (max-width: 620px) {
     .index-grid { grid-template-columns: repeat(2, 1fr); }
@@ -275,84 +275,84 @@
 </head>
 <body>
 <div class="page">
- 
+
   <!-- ── Masthead ── -->
   <div class="masthead">
     <div class="masthead-title">股市晨報</div>
     <div class="masthead-meta">
-      <strong>2026 / 06 / 04</strong><br>
-      週四　08:30 自動產出
+      <strong>{{REPORT_DATE}}</strong><br>
+      {{REPORT_WEEKDAY}}　08:30 自動產出
     </div>
   </div>
- 
+
   <!-- ── 指數區塊 ── -->
   <div class="section-label">昨日指數收盤</div>
   <div class="index-grid">
- 
+
     <div class="idx-card">
       <div class="idx-name">道瓊工業指數</div>
-      <div class="idx-val">26,853.98</div>
-      <div class="idx-chg down">▼ 240 (-0.89%)</div>
+      <div class="idx-val">{{DOW_VALUE}}</div>
+      <div class="idx-chg {{DOW_COLOR}}">{{DOW_CHANGE}}</div>
     </div>
- 
+
     <div class="idx-card">
       <div class="idx-name">S&amp;P 500</div>
-      <div class="idx-val">N/A</div>
-      <div class="idx-chg flat">資料異常</div>
+      <div class="idx-val">{{SP500_VALUE}}</div>
+      <div class="idx-chg {{SP500_COLOR}}">{{SP500_CHANGE}}</div>
     </div>
- 
+
     <div class="idx-card">
       <div class="idx-name">Nasdaq</div>
-      <div class="idx-val">N/A</div>
-      <div class="idx-chg flat">資料異常</div>
+      <div class="idx-val">{{NASDAQ_VALUE}}</div>
+      <div class="idx-chg {{NASDAQ_COLOR}}">{{NASDAQ_CHANGE}}</div>
     </div>
- 
+
     <div class="idx-card">
       <div class="idx-name">費城半導體 SOX</div>
-      <div class="idx-val">N/A</div>
-      <div class="idx-chg flat">資料異常</div>
+      <div class="idx-val">{{SOX_VALUE}}</div>
+      <div class="idx-chg {{SOX_COLOR}}">{{SOX_CHANGE}}</div>
     </div>
- 
+
     <div class="idx-card highlight">
       <div class="idx-name">台股加權指數</div>
-      <div class="idx-val">N/A</div>
-      <div class="idx-chg flat">資料異常</div>
+      <div class="idx-val">{{TWSE_VALUE}}</div>
+      <div class="idx-chg {{TWSE_COLOR}}">{{TWSE_CHANGE}}</div>
     </div>
- 
+
     <div class="idx-card highlight">
       <div class="idx-name">夜台指（期貨夜盤）</div>
-      <div class="idx-val">N/A</div>
-      <div class="idx-chg flat">資料異常</div>
+      <div class="idx-val">{{FUTURES_VALUE}}</div>
+      <div class="idx-chg {{FUTURES_COLOR}}">{{FUTURES_CHANGE}}</div>
     </div>
- 
+
   </div>
- 
+
   <div class="divider"></div>
- 
+
   <!-- ── 區塊一：大盤表現分析 ── -->
   <div class="analysis-block">
     <div class="block-title">
       <span class="block-num">1</span>大盤表現分析
     </div>
     <div class="analysis-body">
-      台股是指臺灣股票市場，主要由臺灣證券交易所（TWSE）和_GRETAI證券交易市場（TPEx）組成，由臺灣證券交易所公司負責營運管理，為臺灣企業籌資和投資者進行股票買賣的重要平台。
+      {{BLOCK1_CONTENT}}
     </div>
   </div>
- 
+
   <div class="divider"></div>
- 
+
   <!-- ── 區塊二：今日台股影響預判 ── -->
   <div class="analysis-block">
     <div class="block-title">
       <span class="block-num">2</span>今日台股影響預判
     </div>
     <div class="analysis-body">
-      台股是指在臺灣證券交易所（TWSE）掛牌上市及交易的股票，包括上市公司和上櫃公司的股票。
+      {{BLOCK2_CONTENT}}
     </div>
   </div>
- 
+
   <div class="divider"></div>
- 
+
   <!-- ── 區塊三：個股觀察建議 ── -->
   <div class="analysis-block">
     <div class="block-title">
@@ -361,16 +361,15 @@
     <div class="filter-note">
       篩選條件：股價 100–500 元｜KD &lt; 50｜MACD 動能向上｜量能增加（Phase 2 啟用後自動篩選）
     </div>
-    <div class="no-stock">個股自動篩選功能將於 Phase 2（串接 Fugle API）後啟用。<br>目前請參考上方類股輪動判斷手動觀察。</div>
+    {{BLOCK3_CONTENT}}
   </div>
- 
+
   <!-- ── Footer ── -->
   <div class="footer">
     <span>⚠ 本報告由 AI 自動生成，僅供參考，不構成任何投資建議</span>
     <span>股市晨報 v1.0</span>
   </div>
- 
+
 </div>
 </body>
 </html>
- 
